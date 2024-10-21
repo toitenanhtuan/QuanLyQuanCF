@@ -1,12 +1,12 @@
-part of 'dangnhap_bloc.dart';
+part of 'getstarted_bloc.dart';
 
-class DangnhapEvent extends Equatable {
+class GetstartedEvent extends Equatable{
   @override
   // TODO: implement props
   List<Object?> get props => [];
 }
 
-class DangnhapInitialEvent extends DangnhapEvent {
+class GetstartedInitialEvent extends GetstartedEvent {
   @override
   // TODO: implement props
   List<Object?> get props => [];

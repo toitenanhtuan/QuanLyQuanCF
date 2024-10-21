@@ -1,0 +1,20 @@
+part of 'theme_bloc.dart';
+
+class ThemeEvent extends Equatable {
+  @override
+  // TODO: implement props
+  List<Object?> get props => throw UnimplementedError();
+
+}
+
+class ThemeChangeEvent extends ThemeEvent {
+  ThemeChangeEvent({required this.themeType}) : super() {
+    PrefUtils().setThemeData(themeType);
+  }
+
+  final String themeType;
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [];
+}
