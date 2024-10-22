@@ -2,6 +2,7 @@ import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
 
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
+import '../custom_image_view.dart';
 
 class AppbarLeadingImage extends StatelessWidget {
   AppbarLeadingImage(
