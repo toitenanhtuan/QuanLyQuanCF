@@ -14,7 +14,7 @@ import '../presentation/getstarted_screen/getstarted_screen.dart';
 // import '../presentation/';
 
 class AppRoutes {
-  static const String getstartedScreen = '/getstarted_screen';
+  static const String getstartedScreen = '../lib/presentation/getstarted_screen/getstarted_screen.dart';
   static const String dangnhapScreen = '/dangnhap_screen';
   static const String cappuccinoOneScreen = '/cappuccino_one_screen';
   static const String giohangOneScreen = '/giohang_one_screen';
@@ -35,7 +35,7 @@ class AppRoutes {
 
   static Map<String, WidgetBuilder> get routes => {
     getstartedScreen: GetstartedScreen.builder,
-    // dangnhapScreen: DangnhapScreen.builder,
+    dangnhapScreen: DangnhapScreen.builder,
     // cappuccinoOneScreen: CappuccinoOneScreen.builder,
     // giohangOneScreen: GiohangOneScreen.builder,
     // trangCfScreen: TrangCfScreen.builder,
@@ -46,6 +46,6 @@ class AppRoutes {
     // motasinhtoScreen: MotasinhtoScreen.builder,
     // stgiohangScreen: StgiohangScreen.builder,
     // appNavigationScreen: AppNavigationScreen.builder,
-    // initialRoute: GetstartedScreen.builder
+    initialRoute: GetstartedScreen.builder
   };
 }

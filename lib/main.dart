@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
               builder: (context, state) {
                 return MaterialApp(
                   theme: theme,
-                  title: 'appqlcafe',
+                  title: 'Qly Quán CF',
                   navigatorKey: NavigatorService.navigatorKey,
                   debugShowCheckedModeBanner: false,
                   localizationsDelegates: [

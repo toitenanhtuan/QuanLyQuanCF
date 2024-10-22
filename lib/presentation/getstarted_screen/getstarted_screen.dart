@@ -1,3 +1,4 @@
+import 'package:appqlcafe/routes/app_routes.dart';
 import 'package:appqlcafe/theme/custom_text_style.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -109,11 +110,21 @@ class GetstartedScreen extends StatelessWidget {
           SizedBox(height: 36.h),
           CustomElevatedButton(
             height: 64.h,
-            text: "get_started".fillPrimary,
-
+            text: "get_started".tr,
+            buttonStyle: CustomButtonStyles.fillPrimary,
+            buttonTextStyle: CustomTextStyles.titleLargeGray50,
+            onPressed: () {
+              onTapGetstarted(context);
+            },
           )
         ],
       ),
-    )
+    );
+  }
+
+  onTapGetstarted(BuildContext context) {
+    NavigatorService.pushNamed(
+      AppRoutes.dangnhapScreen,
+    );
   }
 }

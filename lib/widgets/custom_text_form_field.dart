@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:appqlcafe/theme/custom_text_style.dart';
 import 'package:appqlcafe/theme/theme_helper.dart';
 import 'package:flutter/material.dart';

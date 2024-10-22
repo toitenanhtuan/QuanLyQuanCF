@@ -6,13 +6,13 @@ final Map<String, String> enUs = {
   //DangNhap
   "email": "Email",
   "mat_khau": "Mật Khẩu",
-  "dang_ky": "",
-  "dang_nhap": "",
-  "quen_mat_khau": "",
-  "chua_co_tk_dk": "",
-  "chua_co_tk": "",
-  "nhap_mail_cua_ban": "",
-  "nhap_mk": "",
+  "dang_ky": "Đăng ký",
+  "dang_nhap": "Đăng Nhập",
+  "quen_mat_khau": "Quên mật khẩu",
+  "chua_co_tk_dk": "Chưa có tài khoản? Đăng ký",
+  "chua_co_tk": "Chưa có tài khoản?",
+  "nhap_mail_cua_ban": "Nhập email của bạn",
+  "nhap_mk": "Nhập mật khẩu của bạn",
 
   // Mo ta Cappuccino
   "cappuccino_with": "Cappuccino with Chocolate mang đến hương vị đậm đà của cà phê hòa quyện cùng vị ngọt dịu của sô-cô-la, tạo nên một tách cà phê thơm ngon và đặc biệt. Thích hợp để thưởng thức mỗi ngày.",
@@ -22,7 +22,7 @@ final Map<String, String> enUs = {
   "with_low_fat": "With Low Fat Milk",
 
   // GioHang
-  "do_uong": "",
+  "do_uong": "Đồ uống",
   "caffee_cappuccino": "Coffee Cappuccino",
 
   // Tnmhtoan
