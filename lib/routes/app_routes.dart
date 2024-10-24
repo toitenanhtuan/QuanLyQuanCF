@@ -4,7 +4,7 @@ import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/cappuccino_one_screen/cappuccino_one_screen.dart';
 import '../presentation/dangnhap_screen/dangnhap_screen.dart';
 import '../presentation/getstarted_screen/getstarted_screen.dart';
-// import '../presentation/';
+import '../presentation/trang_cf_screen/trang_cf_screen.dart';
 // import '../presentation/';
 // import '../presentation/';
 // import '../presentation/';
@@ -38,7 +38,7 @@ class AppRoutes {
     dangnhapScreen: DangnhapScreen.builder,
     // cappuccinoOneScreen: CappuccinoOneScreen.builder,
     // giohangOneScreen: GiohangOneScreen.builder,
-    // trangCfScreen: TrangCfScreen.builder,
+    trangCfScreen: TrangCfScreen.builder,
     // themgiohangScreen: ThemgiohangScreen.builder,
     // thanhtoanScreen: ThanhtoanScreen.builder,
     // motatrasuaScreen: MotatrasuaScreen.builder,
