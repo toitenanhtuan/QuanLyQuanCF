@@ -2,35 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/trasua_bloc.dart';
 import 'models/trasua_model.dart';
-import '../trang_cf_screen/trang_cf_screen.dart';
 
 class TraSuaScreen extends StatelessWidget {
   const TraSuaScreen({Key? key}) : super(key: key);
 
-  static Widget builder(BuildContext context) {
-    return BlocProvider<TraSuaBloc>(
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
       create: (context) => TraSuaBloc(TraSuaState(
         traSuaModelObj: TraSuaModel(),
       ))..add(TraSuaInitialEvent()),
-      child: TraSuaScreen(),
+      child: _TraSuaScreenContent(),
     );
   }
+}
 
+class _TraSuaScreenContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TraSuaBloc, TraSuaState>(
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(),
-                _buildSearchBar(),
-                _buildCategories(),
-                _buildTraSuaGrid(state),
-                _buildSpecialOffer(),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildHeader(),
+                  _buildSearchBar(),
+                  _buildCategories(),
+                  _buildTraSuaGrid(state),
+                  _buildSpecialOffer(),
+                ],
+              ),
             ),
           ),
           bottomNavigationBar: _buildBottomNavigation(),
@@ -81,23 +85,23 @@ class TraSuaScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.amber, size: 16),
-                        Text(item.rating),
-                      ],
-                    ),
-                  ),
-                ),
+                // Positioned(
+                //   top: 8,
+                //   right: 8,
+                //   child: Container(
+                //     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                //     decoration: BoxDecoration(
+                //       color: Colors.white,
+                //       borderRadius: BorderRadius.circular(12),
+                //     ),
+                //     child: Row(
+                //       children: [
+                //         Icon(Icons.star, color: Colors.amber, size: 16),
+                //         Text(item.rating),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             Padding(
@@ -142,8 +146,6 @@ class TraSuaScreen extends StatelessWidget {
       ),
     );
   }
-
-
 
 
   Widget _buildHeader() {
@@ -227,9 +229,9 @@ class TraSuaScreen extends StatelessWidget {
           SizedBox(height: 12),
           Row(
             children: [
-              _buildCategoryChip('Cà Phê', true),
+              _buildCategoryChip('Cà Phê', false),
               SizedBox(width: 8),
-              _buildCategoryChip('Trà sữa', false),
+              _buildCategoryChip('Trà sữa', true),
               SizedBox(width: 8),
               _buildCategoryChip('Sinh Tố', false),
             ],

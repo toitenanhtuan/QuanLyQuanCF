@@ -21,14 +21,14 @@ class TraSuaBloc extends Bloc<TraSuaEvent, TraSuaState> {
             TraSuaItemModel(
               name: "Trà sữa nướng",
               price: "50.000",
-              image: "assets/tra_sua_nuong.jpg",
-              rating: "4.5",
+              image: "assets/images/trasua_small.png",
+              rating: "",
             ),
             TraSuaItemModel(
               name: "Trà sữa thái xanh",
               price: "56.000",
-              image: "assets/tra_sua_thai_xanh.jpg",
-              rating: "4.7",
+              image: "assets/images/thaixanh_small.png",
+              rating: "",
             ),
           ],
         )));
