@@ -3,185 +3,60 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/trang_cf_bloc.dart';
 import 'models/trang_cf_model.dart';
 import '../trang_trasua_screen/trang_trasua_screen.dart';
+import '../trang_sinhto_screen/trang_sinhto_screen.dart';
 
 class TrangCfScreen extends StatelessWidget {
-  TrangCfScreen({Key? key}) : super(key: key);
+  const TrangCfScreen({Key? key}) : super(key: key);
 
   static Widget builder(BuildContext context) {
     return BlocProvider<TrangCfBloc>(
       create: (context) => TrangCfBloc(TrangCfState(
         trangCfModelObj: TrangCfModel(),
       ))..add(TrangCfInitialEvent()),
-      child: TrangCfScreen(),
+      child: BlocBuilder<TrangCfBloc, TrangCfState>(
+        builder: (context, state) {
+          return Scaffold(
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildHeader(),
+                    _buildSearchBar(),
+                    _buildCategories(context),
+                    _buildCoffeeGrid(state),
+                    _buildSpecialOffer(),
+                  ],
+                ),
+              ),
+            ),
+            bottomNavigationBar: _buildBottomNavigation(),
+          );
+        },
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TrangCfBloc, TrangCfState>(
-      builder: (context, state) {
-        return Scaffold(
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHeader(),
-                  _buildSearchBar(),
-                  _buildCategories(context),
-                  _buildCoffeeGrid(),
-                  _buildSpecialOffer(),
-                ],
-              ),
-            ),
-          ),
-          bottomNavigationBar: _buildBottomNavigation(),
-        );
-      },
-    );
+    return builder(context);
   }
 
-  Widget _buildHeader() {
+  static Widget _buildCoffeeGrid(TrangCfState state) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          CircleAvatar(
-            backgroundColor: Colors.grey[300],
-            child: Icon(Icons.person_outline, color: Colors.grey[600]),
-          ),
-          SizedBox(width: 12),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.location_on, size: 16, color: Colors.brown),
-                  Text(
-                    'Hải Châu, Đà Nẵng',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                ],
-              ),
-              Text(
-                'Xin chào',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          Spacer(),
-          IconButton(
-            icon: Icon(Icons.notifications_outlined),
-            onPressed: () {},
-          ),
+          _buildCoffeeItem(state.trangCfModelObj?.items?[0]),
+          const SizedBox(width: 12),
+          _buildCoffeeItem(state.trangCfModelObj?.items?[1]),
         ],
       ),
     );
   }
 
-  Widget _buildSearchBar() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.search, color: Colors.grey),
-            SizedBox(width: 8),
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search Coffee...',
-                  border: InputBorder.none,
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-              ),
-            ),
-            Icon(Icons.menu, color: Colors.brown),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCategories(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Thực đơn',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 12),
-          Row(
-            children: [
-              _buildCategoryChip('Cà Phê', true, context),
-              SizedBox(width: 8),
-              _buildCategoryChip('Trà sữa', false, context),
-              SizedBox(width: 8),
-              _buildCategoryChip('Sinh Tố', false, context),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-
-  Widget _buildCategoryChip(String label, bool isSelected, BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (label == 'Trà sữa') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TraSuaScreen()),
-          );
-        } else if (label == 'Sinh Tố') {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => TrangSinhToScreen()),
-          // );
-        }
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.brown : Colors.white,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isSelected ? Colors.brown : Colors.grey),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
-    );
-  }
-
-
-  Widget _buildCoffeeGrid() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          _buildCoffeeItem('Cappuccino', '85.000', 'assets/images/cappuccino_small.png'),
-          SizedBox(width: 12),
-          _buildCoffeeItem('Cappuccino', '76.000', 'assets/images/cappuccino_lowmilk.png'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCoffeeItem(String name, String price, String image) {
+  static Widget _buildCoffeeItem(CoffeeItemModel? item) {
+    if (item == null) return const SizedBox();
     return Expanded(
       child: Container(
         decoration: BoxDecoration(
@@ -198,42 +73,51 @@ class TrangCfScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                image,
-                height: 120,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+            Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    item.image,
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
             ),
             Padding(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    item.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
+                  Text(
+                    item.description,
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '$price đ',
-                        style: TextStyle(
+                        '${item.price} đ',
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.brown,
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
                           color: Colors.brown,
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(
+                        child: const Icon(
                           Icons.add,
                           color: Colors.white,
                           size: 20,
@@ -250,7 +134,160 @@ class TrangCfScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSpecialOffer() {
+  static Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          const CircleAvatar(
+            backgroundColor: Colors.grey,
+            child: Icon(Icons.person_outline, color: Colors.white),
+          ),
+          const SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Xin chào',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Row(
+                children: const [
+                  Icon(Icons.location_on, size: 16, color: Colors.brown),
+                  Text('Hải Châu, Đà Nẵng'),
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.notifications_outlined),
+                onPressed: () {},
+              ),
+              // Positioned(
+              //   right: 8,
+              //   top: 8,
+              //   child: Container(
+              //     width: 8,
+              //     height: 8,
+              //     decoration: const BoxDecoration(
+              //       color: Colors.red,
+              //       shape: BoxShape.circle,
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget _buildSearchBar() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: const TextField(
+          decoration: InputDecoration(
+            hintText: 'Search Coffee...',
+            prefixIcon: Icon(Icons.search),
+            suffixIcon: Icon(Icons.menu),
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.symmetric(horizontal: 16),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget _buildCategories(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Thực đơn',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              _buildCategoryButton(
+                context,
+                'Cà Phê',
+                isSelected: true,
+                onTap: () {},
+              ),
+              const SizedBox(width: 8),
+              _buildCategoryButton(
+                context,
+                'Trà sữa',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => TraSuaScreen()),
+                  );
+                },
+              ),
+              const SizedBox(width: 8),
+              _buildCategoryButton(
+                context,
+                'Sinh Tố',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SinhToScreen()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget _buildCategoryButton(
+      BuildContext context,
+      String label, {
+        bool isSelected = false,
+        required VoidCallback onTap,
+      }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.brown : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: isSelected ? Colors.brown : Colors.grey,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Widget _buildSpecialOffer() {
     return Padding(
       padding: EdgeInsets.all(16),
       child: Column(
@@ -325,16 +362,29 @@ class TrangCfScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigation() {
+  static Widget _buildBottomNavigation() {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.brown,
       unselectedItemColor: Colors.grey,
-      items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: 'Favourite'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
+      currentIndex: 0,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite_border),
+          label: 'Favourite',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart_outlined),
+          label: 'Cart',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_outline),
+          label: 'Profile',
+        ),
       ],
     );
   }

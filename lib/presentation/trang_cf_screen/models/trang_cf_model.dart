@@ -1,13 +1,28 @@
-import 'package:equatable/equatable.dart';
 
-class TrangCfModel extends Equatable {
-  TrangCfModel();
+class TrangCfModel {
+  List<CoffeeItemModel>? items;
 
-  TrangCfModel copyWith() {
-    return TrangCfModel();
+  TrangCfModel({this.items});
+
+  TrangCfModel copyWith({List<CoffeeItemModel>? items}){
+    return TrangCfModel(
+      items: items ?? this.items,
+    );
   }
+}
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => [];
+class CoffeeItemModel {
+  final String name;
+  final String price;
+  final String image;
+  final String rating;
+  final String description;
+
+  CoffeeItemModel({
+    required this.name,
+    required this.price,
+    required this.image,
+    required this.rating,
+    required this.description,
+  });
 }

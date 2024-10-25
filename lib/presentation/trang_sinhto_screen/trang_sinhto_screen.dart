@@ -1,28 +1,31 @@
-import 'package:appqlcafe/presentation/trang_sinhto_screen/trang_sinhto_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/trasua_bloc.dart';
-import 'models/trasua_model.dart';
+import 'bloc/sinhto_bloc.dart';
+import 'models/sinhto_model.dart';
 import '../trang_cf_screen/trang_cf_screen.dart';
+import '../trang_trasua_screen/trang_trasua_screen.dart';
 
-class TraSuaScreen extends StatelessWidget {
-  const TraSuaScreen({Key? key}) : super(key: key);
+
+class SinhToScreen extends StatelessWidget {
+  const SinhToScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TraSuaBloc(TraSuaState(
-        traSuaModelObj: TraSuaModel(),
-      ))..add(TraSuaInitialEvent()),
-      child: _TraSuaScreenContent(),
+      create: (context) =>
+      SinhToBloc(SinhToState(
+        sinhToModelObj: SinhToModel(),
+      ))
+        ..add(SinhToInitialEvent()),
+      child: _SinhToScreenContext(),
     );
   }
 }
 
-class _TraSuaScreenContent extends StatelessWidget {
+class _SinhToScreenContext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TraSuaBloc, TraSuaState>(
+    return BlocBuilder<SinhToBloc, SinhToState>(
       builder: (context, state) {
         return Scaffold(
           body: SafeArea(
@@ -33,7 +36,7 @@ class _TraSuaScreenContent extends StatelessWidget {
                   _buildHeader(),
                   _buildSearchBar(),
                   _buildCategories(context),
-                  _buildTraSuaGrid(state),
+                  _buildSinhToGrid(state),
                   _buildSpecialOffer(),
                 ],
               ),
@@ -45,20 +48,21 @@ class _TraSuaScreenContent extends StatelessWidget {
     );
   }
 
-  Widget _buildTraSuaGrid(TraSuaState state) {
+
+  Widget _buildSinhToGrid(SinhToState state) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          _buildTraSuaItem(state.traSuaModelObj?.items?[0]),
+          _buildSinhToItem(state.sinhToModelObj?.items?[0]),
           SizedBox(width: 12),
-          _buildTraSuaItem(state.traSuaModelObj?.items?[1]),
+          _buildSinhToItem(state.sinhToModelObj?.items?[1]),
         ],
       ),
     );
   }
 
-  Widget _buildTraSuaItem(TraSuaItemModel? item) {
+  Widget _buildSinhToItem(SinhToItemModel? item) {
     if (item == null) return SizedBox();
     return Expanded(
       child: Container(
@@ -149,7 +153,6 @@ class _TraSuaScreenContent extends StatelessWidget {
     );
   }
 
-
   Widget _buildHeader() {
     return Padding(
       padding: EdgeInsets.all(16),
@@ -233,9 +236,9 @@ class _TraSuaScreenContent extends StatelessWidget {
             children: [
               _buildCategoryChip('Cà Phê', false, context),
               SizedBox(width: 8),
-              _buildCategoryChip('Trà sữa', true, context),
+              _buildCategoryChip('Trà sữa', false, context),
               SizedBox(width: 8),
-              _buildCategoryChip('Sinh Tố', false, context),
+              _buildCategoryChip('Sinh Tố', true, context),
             ],
           ),
         ],
@@ -245,19 +248,19 @@ class _TraSuaScreenContent extends StatelessWidget {
 
   Widget _buildCategoryChip(String label, bool isSelected, BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (label == 'Cà Phê') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TrangCfScreen()),
-          );
-        } else if (label == 'Sinh Tố') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SinhToScreen()),
-          );
-        }
-      },
+        onTap: () {
+          if (label == 'Trà sữa') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TraSuaScreen()),
+            );
+          } else if (label == 'Cà Phê') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TrangCfScreen()),
+            );
+          }
+        },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
@@ -322,7 +325,8 @@ class _TraSuaScreenContent extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.brown[200],
                           borderRadius: BorderRadius.circular(4),
@@ -358,9 +362,11 @@ class _TraSuaScreenContent extends StatelessWidget {
       unselectedItemColor: Colors.grey,
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: 'Favourite'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.favorite_border), label: 'Favourite'),
         BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.person_outline), label: 'Profile'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline), label: 'Profile'),
       ],
     );
   }

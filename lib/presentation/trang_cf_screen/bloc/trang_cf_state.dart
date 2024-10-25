@@ -1,23 +1,12 @@
 part of 'trang_cf_bloc.dart';
 
-class TrangCfState extends Equatable {
-  TrangCfState({
-    this.trangCfModelObj,
-    this.trangCfInitialModelObj});
+class TrangCfState {
+  final TrangCfModel? trangCfModelObj;
 
-  TrangCfModel? trangCfModelObj;
-  TrangCfInitialModel? trangCfInitialModelObj;
+  TrangCfState({this.trangCfModelObj});
 
-  @override
-  // TODO: implement props
-  List<Object?> get props => [trangCfInitialModelObj, trangCfModelObj];
-  TrangCfState copyWith({
-    TrangCfInitialModel? trangCfInitialModelObj,
-    TrangCfModel?  trangCfModelObj,
-  }) {
+  TrangCfState copyWith({TrangCfModel? trangCfModelObj}) {
     return TrangCfState(
-      trangCfInitialModelObj:
-        trangCfInitialModelObj ?? this.trangCfInitialModelObj,
       trangCfModelObj: trangCfModelObj ?? this.trangCfModelObj,
     );
   }
