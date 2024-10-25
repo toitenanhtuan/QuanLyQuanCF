@@ -20,14 +20,14 @@ class TrangCfBloc extends Bloc<TrangCfEvent, TrangCfState> {
               price: "85.000",
               image: "assets/images/cappuccino_small.png",
               rating: "",
-              description: "With Oat Milk",
+              description: "With Chocolate",
             ),
             CoffeeItemModel(
               name: "Cappuccino",
               price: "76.000",
               image: "assets/images/cappuccino_lowmilk.png",
               rating: "",
-              description: "With Lite Milk",
+              description: "With Low Fat Milk",
             ),
           ],
 

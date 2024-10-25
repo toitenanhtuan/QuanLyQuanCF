@@ -4,6 +4,7 @@ import 'bloc/trang_cf_bloc.dart';
 import 'models/trang_cf_model.dart';
 import '../trang_trasua_screen/trang_trasua_screen.dart';
 import '../trang_sinhto_screen/trang_sinhto_screen.dart';
+import 'cappuccino_detail_screen.dart';
 
 class TrangCfScreen extends StatelessWidget {
   const TrangCfScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class TrangCfScreen extends StatelessWidget {
                     _buildHeader(),
                     _buildSearchBar(),
                     _buildCategories(context),
-                    _buildCoffeeGrid(state),
+                    _buildCoffeeGrid(context, state),
                     _buildSpecialOffer(),
                   ],
                 ),
@@ -42,93 +43,102 @@ class TrangCfScreen extends StatelessWidget {
     return builder(context);
   }
 
-  static Widget _buildCoffeeGrid(TrangCfState state) {
+  static Widget _buildCoffeeGrid(BuildContext context ,TrangCfState state) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          _buildCoffeeItem(state.trangCfModelObj?.items?[0]),
+          _buildCoffeeItem(context, state.trangCfModelObj?.items?[0]),
           const SizedBox(width: 12),
-          _buildCoffeeItem(state.trangCfModelObj?.items?[1]),
+          _buildCoffeeItem(context ,state.trangCfModelObj?.items?[1]),
         ],
       ),
     );
   }
 
-  static Widget _buildCoffeeItem(CoffeeItemModel? item) {
+  static Widget _buildCoffeeItem(BuildContext context ,CoffeeItemModel? item) {
     if (item == null) return const SizedBox();
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 4,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => const CappuccinoDetailScreen(),
             ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    item.image,
-                    height: 120,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          );
+        },
+
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
                 children: [
-                  Text(
-                    item.name,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item.description,
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${item.price} đ',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.brown,
-                        ),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(4),
-                        decoration: const BoxDecoration(
-                          color: Colors.brown,
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ],
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      item.image,
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      item.description,
+                      style: const TextStyle(color: Colors.grey),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${item.price} đ',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.brown,
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            color: Colors.brown,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

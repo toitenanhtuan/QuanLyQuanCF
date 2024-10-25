@@ -1,7 +1,6 @@
 import 'package:appqlcafe/presentation/getstarted_screen/bloc/getstarted_bloc.dart';
 import 'package:flutter/material.dart';
 import '../presentation/app_navigation_screen/app_navigation_screen.dart';
-import '../presentation/cappuccino_one_screen/cappuccino_one_screen.dart';
 import '../presentation/dangnhap_screen/dangnhap_screen.dart';
 import '../presentation/getstarted_screen/getstarted_screen.dart';
 import '../presentation/trang_cf_screen/trang_cf_screen.dart';
