@@ -28,8 +28,8 @@ class ImageConstant {
   static String imgCappuccinoFall = '$imagePath/cappuccino_fall.png';
   static String imgArrowLeft = '$imagePath/arrow_left.svg';
   static String imgSignal = '$imagePath/signal.svg';
-  static String imgOpenmojiRoastedCoffeeBean = '$imagePath/openmoji_roasted_coffee_bean.svg';
-  static String imgTelevision = '$imagePath/television.svg';
+  static String imgCoffeeBean = '$imagePath/coffee_bean.svg';
+  static String imgChotolate = '$imagePath/chocolate.svg';
   static String imgLock = '$imagePath/lock.svg';
   static String imgCarbonLocationFilled = '$imagePath/carbon_location_filled.svg';
   static String imgNotification = '$imagePath/notification.svg';

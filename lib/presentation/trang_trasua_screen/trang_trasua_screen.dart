@@ -67,7 +67,7 @@ class _TraSuaScreenContent extends StatelessWidget {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.black.withOpacity(0.4),
               spreadRadius: 1,
               blurRadius: 4,
             ),
@@ -299,7 +299,7 @@ class _TraSuaScreenContent extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.black.withOpacity(0.4),
                   spreadRadius: 1,
                   blurRadius: 4,
                 ),

@@ -4,7 +4,8 @@ import 'bloc/trang_cf_bloc.dart';
 import 'models/trang_cf_model.dart';
 import '../trang_trasua_screen/trang_trasua_screen.dart';
 import '../trang_sinhto_screen/trang_sinhto_screen.dart';
-import 'cappuccino_detail_screen.dart';
+import 'cappuccino_with_chocolate.dart';
+import 'cappuccino_with_low_fat_milk.dart';
 
 class TrangCfScreen extends StatelessWidget {
   const TrangCfScreen({Key? key}) : super(key: key);
@@ -61,10 +62,21 @@ class TrangCfScreen extends StatelessWidget {
     return Expanded(
       child: InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => const CappuccinoDetailScreen(),
-            ),
-          );
+          if (item.name == "Cappuccino With Chocolate") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CappuccinoWithChocolate(),
+              ),
+            );
+          } else if (item.name == "Cappuccino With Low Fat Milk") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CappuccinoWithLowFatMilk(),
+              ),
+            );
+          }
         },
 
         child: Container(
@@ -73,7 +85,7 @@ class TrangCfScreen extends StatelessWidget {
             color: Colors.white,
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
+                color: Colors.black.withOpacity(0.4),
                 spreadRadius: 1,
                 blurRadius: 4,
               ),
@@ -200,20 +212,28 @@ class TrangCfScreen extends StatelessWidget {
 
   static Widget _buildSearchBar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(25),
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(12),
         ),
-        child: const TextField(
-          decoration: InputDecoration(
-            hintText: 'Search Coffee...',
-            prefixIcon: Icon(Icons.search),
-            suffixIcon: Icon(Icons.menu),
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 16),
-          ),
+        child: Row(
+          children: [
+            Icon(Icons.search, color: Colors.grey),
+            SizedBox(width: 8),
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Search Coffee...',
+                  border: InputBorder.none,
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+              ),
+            ),
+            Icon(Icons.menu, color: Colors.brown),
+          ],
         ),
       ),
     );
@@ -320,7 +340,7 @@ class TrangCfScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.black.withOpacity(0.4),
                   spreadRadius: 1,
                   blurRadius: 4,
                 ),

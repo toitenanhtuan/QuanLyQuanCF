@@ -16,17 +16,15 @@ class TrangCfBloc extends Bloc<TrangCfEvent, TrangCfState> {
         trangCfModelObj: state.trangCfModelObj?.copyWith(
           items: [
             CoffeeItemModel(
-              name: "Cappuccino",
+              name: "Cappuccino With Chocolate",
               price: "85.000",
               image: "assets/images/cappuccino_small.png",
-              rating: "",
               description: "With Chocolate",
             ),
             CoffeeItemModel(
-              name: "Cappuccino",
+              name: "Cappuccino With Low Fat Milk",
               price: "76.000",
               image: "assets/images/cappuccino_lowmilk.png",
-              rating: "",
               description: "With Low Fat Milk",
             ),
           ],
