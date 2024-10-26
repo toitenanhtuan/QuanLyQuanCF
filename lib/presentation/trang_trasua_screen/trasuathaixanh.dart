@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/utils/image_constant.dart';
 
-class CappuccinoWithLowFatMilk extends StatefulWidget {
-  const CappuccinoWithLowFatMilk({Key? key}) : super(key: key);
+class TraSuaThaiXanh extends StatefulWidget {
+  const TraSuaThaiXanh({Key? key}) : super(key: key);
 
   @override
-  State<CappuccinoWithLowFatMilk> createState() => _TraSuaNuongState();
+  State<TraSuaThaiXanh> createState() => _TraSuaNuongState();
 }
 
-class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
+class _TraSuaNuongState extends State<TraSuaThaiXanh> {
   String selectedSize = 'Small';
   final Map<String, int> prices = {
-    'Small': 76000,
-    'Medium': 85000,
-    'Large': 95000,
+    'Small': 56000,
+    'Medium': 66000,
+    'Large': 75000,
   };
 
   @override
@@ -31,7 +31,7 @@ class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/images/cappuccino_lowmilk.png'),
+                      image: AssetImage('assets/images/thaixanh_small.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -102,7 +102,7 @@ class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              'Cappuccino',
+                              'Trà sữa thái xanh',
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
                             ),
                             const SizedBox(height: 8),
                             const Text(
-                              'With Low Fat Milk',
+                              'Trà xanh + Sữa tươi + Kem ngọt',
                               style: TextStyle(
                                 color: Colors.grey,
                                 fontSize: 16,
@@ -123,9 +123,9 @@ class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
                               scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: [
-                                  _buildTag(SvgPicture.asset(ImageConstant.imgCoffeeBean, width: 18, height: 18), 'Coffee'),
+                                  _buildTag(Image.asset('assets/images/milk-tea.png', width: 18, height: 18), 'Milk Tea'),
                                   const SizedBox(width: 8),
-                                  _buildTag(SvgPicture.asset(ImageConstant.imgChotolate, width: 18, height: 18), 'Chocolate'),
+                                  _buildTag(const Icon(Icons.water_drop_outlined, size: 18), 'Sugar'),
                                   const SizedBox(width: 8),
                                   _buildTag(const Icon(Icons.local_fire_department_outlined, size: 18), 'Medium Roasted'),
                                 ],
@@ -189,7 +189,7 @@ class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
                             ),
                             const SizedBox(height: 8),
                             const Text(
-                              'Cappuccino với sữa ít béo mang đến hương vị đậm đà của cà phê espresso kết hợp với lớp sữa ít béo mịn màng, tạo nên một lựa chọn hoàn hảo cho những người yêu thích hương vị cappuccino truyền thống nhưng vẫn muốn giữ gìn vóc dáng.',
+                              'Trà sữa Thái xanh có màu xanh tươi, tạo cảm giác mát mẻ thanh lọc khi uống, mà thật vị trà Thái xanh có mùi thơm sảng khoái, kích thích các giác quan, đem đến sự tươi tỉnh khi dùng. ',
                               style: TextStyle(
                                 color: Colors.grey,
                                 height: 1.5,

@@ -1,4 +1,6 @@
 import 'package:appqlcafe/presentation/trang_sinhto_screen/trang_sinhto_screen.dart';
+import 'package:appqlcafe/presentation/trang_trasua_screen/trasuanuong.dart';
+import 'package:appqlcafe/presentation/trang_trasua_screen/trasuathaixanh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/trasua_bloc.dart';
@@ -33,7 +35,7 @@ class _TraSuaScreenContent extends StatelessWidget {
                   _buildHeader(),
                   _buildSearchBar(),
                   _buildCategories(context),
-                  _buildTraSuaGrid(state),
+                  _buildTraSuaGrid(context, state),
                   _buildSpecialOffer(),
                 ],
               ),
@@ -45,105 +47,124 @@ class _TraSuaScreenContent extends StatelessWidget {
     );
   }
 
-  Widget _buildTraSuaGrid(TraSuaState state) {
+  Widget _buildTraSuaGrid(BuildContext context, TraSuaState state) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
-          _buildTraSuaItem(state.traSuaModelObj?.items?[0]),
+          _buildTraSuaItem(context, state.traSuaModelObj?.items?[0]),
           SizedBox(width: 12),
-          _buildTraSuaItem(state.traSuaModelObj?.items?[1]),
+          _buildTraSuaItem(context, state.traSuaModelObj?.items?[1]),
         ],
       ),
     );
   }
 
-  Widget _buildTraSuaItem(TraSuaItemModel? item) {
+  Widget _buildTraSuaItem(BuildContext context, TraSuaItemModel? item) {
     if (item == null) return SizedBox();
     return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.4),
-              spreadRadius: 1,
-              blurRadius: 4,
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    item.image,
-                    height: 120,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                // Positioned(
-                //   top: 8,
-                //   right: 8,
-                //   child: Container(
-                //     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                //     decoration: BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius: BorderRadius.circular(12),
-                //     ),
-                //     child: Row(
-                //       children: [
-                //         Icon(Icons.star, color: Colors.amber, size: 16),
-                //         Text(item.rating),
-                //       ],
-                //     ),
-                //   ),
-                // ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: InkWell(
+        onTap: () {
+          if (item.name == "Trà sữa nướng") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TraSuaNuong(),
+              ),
+            );
+          } else if (item.name == "Trà sữa thái xanh") {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TraSuaThaiXanh(),
+              ),
+            );
+          }
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.4),
+                spreadRadius: 1,
+                blurRadius: 4,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
                 children: [
-                  Text(
-                    item.name,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      item.image,
+                      height: 120,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  SizedBox(height: 4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '${item.price} đ',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.brown,
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: Colors.brown,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Positioned(
+                  //   top: 8,
+                  //   right: 8,
+                  //   child: Container(
+                  //     padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  //     decoration: BoxDecoration(
+                  //       color: Colors.white,
+                  //       borderRadius: BorderRadius.circular(12),
+                  //     ),
+                  //     child: Row(
+                  //       children: [
+                  //         Icon(Icons.star, color: Colors.amber, size: 16),
+                  //         Text(item.rating),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${item.price} đ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.brown,
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: Colors.brown,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.add,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
