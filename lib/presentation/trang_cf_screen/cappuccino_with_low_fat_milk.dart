@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../core/utils/image_constant.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'bloc/trang_cf_bloc.dart';
 
 class CappuccinoWithLowFatMilk extends StatefulWidget {
   const CappuccinoWithLowFatMilk({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<TrangCfBloc>();
     return Scaffold(
       backgroundColor: const Color(0xFFE8F6F7),
       body: SafeArea(
@@ -207,7 +210,21 @@ class _TraSuaNuongState extends State<CappuccinoWithLowFatMilk> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            bloc.add(
+                              AddToCartEvent(
+                                name: "Cappuccino With Low Fat Milk ($selectedSize)",
+                                price: prices[selectedSize]! / 1000,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Đã thêm vào giỏ hàng'),
+                                duration: Duration(seconds: 1),
+                              ),
+                            );
+                            Navigator.pop(context);
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF846046),
                             padding: const EdgeInsets.symmetric(

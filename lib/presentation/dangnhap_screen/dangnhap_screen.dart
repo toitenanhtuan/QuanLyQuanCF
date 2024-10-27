@@ -1,7 +1,7 @@
 import 'package:appqlcafe/routes/app_routes.dart';
 import 'package:appqlcafe/theme/custom_text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevanted_button.dart';
@@ -166,8 +166,16 @@ class DangnhapScreen extends StatelessWidget {
     );
   }
 
-  onTapDangNhap(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.trangCfScreen,
-    );
+  void onTapDangNhap(BuildContext context) async {
+    final bloc = context.read<DangnhapBloc>();
+    final emailController = bloc.state.emailtwoController;
+
+    if (emailController != null && emailController.text.isNotEmpty) {
+      // Lưu email vào SharedPreferences
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('user_email', emailController.text);
+
+      NavigatorService.pushNamed(AppRoutes.trangCfScreen);
+    }
   }
 }

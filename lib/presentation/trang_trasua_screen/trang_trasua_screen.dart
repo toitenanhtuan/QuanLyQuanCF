@@ -270,7 +270,7 @@ class _TraSuaScreenContent extends StatelessWidget {
         if (label == 'Cà Phê') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TrangCfScreen()),
+            MaterialPageRoute(builder: (context) => TrangCfScreen.builder(context)),
           );
         } else if (label == 'Sinh Tố') {
           Navigator.push(

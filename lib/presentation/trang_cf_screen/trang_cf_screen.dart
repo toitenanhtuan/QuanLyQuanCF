@@ -4,10 +4,12 @@ import 'bloc/trang_cf_bloc.dart';
 import 'models/trang_cf_model.dart';
 import '../trang_trasua_screen/trang_trasua_screen.dart';
 import '../trang_sinhto_screen/trang_sinhto_screen.dart';
+import '../profile_screen/profile_screen.dart';
 import 'cappuccino_with_chocolate.dart';
 import 'cappuccino_with_low_fat_milk.dart';
+import 'package:intl/intl.dart';
 
-class TrangCfScreen extends StatelessWidget {
+class TrangCfScreen extends StatefulWidget {
   const TrangCfScreen({Key? key}) : super(key: key);
 
   static Widget builder(BuildContext context) {
@@ -15,33 +17,157 @@ class TrangCfScreen extends StatelessWidget {
       create: (context) => TrangCfBloc(TrangCfState(
         trangCfModelObj: TrangCfModel(),
       ))..add(TrangCfInitialEvent()),
-      child: BlocBuilder<TrangCfBloc, TrangCfState>(
-        builder: (context, state) {
-          return Scaffold(
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildHeader(),
-                    _buildSearchBar(),
-                    _buildCategories(context),
-                    _buildCoffeeGrid(context, state),
-                    _buildSpecialOffer(),
-                  ],
-                ),
-              ),
-            ),
-            bottomNavigationBar: _buildBottomNavigation(),
-          );
-        },
-      ),
+      child: const TrangCfScreen(),
     );
   }
 
   @override
+  State<TrangCfScreen> createState() => _TrangCfScreenState();
+}
+
+class _TrangCfScreenState extends State<TrangCfScreen> {
+  @override
   Widget build(BuildContext context) {
-    return builder(context);
+    return BlocBuilder<TrangCfBloc, TrangCfState>(
+      builder: (context, state) {
+        return Scaffold(
+          body: Stack(
+            children: [
+              SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildHeader(),
+                      _buildSearchBar(),
+                      _buildCategories(context),
+                      _buildCoffeeGrid(context, state),
+                      _buildSpecialOffer(),
+                    ],
+                  ),
+                ),
+              ),
+              _buildFloatingCartBar(context,state),
+            ],
+          ),
+          bottomNavigationBar: _buildBottomNavigation(context),
+        );
+      },
+    );
+  }
+
+  Widget _buildFloatingCartBar(BuildContext context,TrangCfState state) {
+    if (!state.showCart) return const SizedBox.shrink();
+
+    final totalItems = state.cartItems.values
+        .fold(0, (sum, item) => sum + item.quantity);
+    final totalPrice = state.cartItems.values
+        .fold(0.0, (sum, item) => sum + (item.price * item.quantity));
+
+    String formatPrice(double price) {
+      price = price * 1000;
+      final formatter = NumberFormat('#,###', 'vi_VN');
+      return formatter.format(price);
+    }
+
+    return Positioned(
+      bottom: 10,
+      left: 20,
+      right: 20,
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          color: Color(0xFF8B4511),
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Row(
+          children: [
+
+            // Nút giảm số lượng
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  context.read<TrangCfBloc>().add(
+                    DecreaseQuantityEvent(),
+                  );
+                },
+                child: Container(
+                  width: 40,
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.remove,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Row(
+                  children: [
+                    Text(
+                      '$totalItems Đồ uống',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                  ],
+                ),
+              ),
+            ),
+
+            // Nút tăng số lượng
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  context.read<TrangCfBloc>().add(
+                    IncreaseQuantityEvent(),
+                  );
+                },
+                child: Container(
+                  width: 40,
+                  height: 50,
+                  alignment: Alignment.center,
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: const BoxDecoration(
+                border: Border(
+                  left: BorderSide(
+                    color: Colors.white24,
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: Text(
+                '${formatPrice(totalPrice)}vnd',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   static Widget _buildCoffeeGrid(BuildContext context ,TrangCfState state) {
@@ -63,17 +189,22 @@ class TrangCfScreen extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (item.name == "Cappuccino With Chocolate") {
-            Navigator.push(
-              context,
+            Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const CappuccinoWithChocolate(),
+                builder: (_) => BlocProvider.value(
+                  value: context.read<TrangCfBloc>(),
+                  child: const CappuccinoWithChocolate(),
+                ),
               ),
             );
           } else if (item.name == "Cappuccino With Low Fat Milk") {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const CappuccinoWithLowFatMilk(),
+                builder: (_) => BlocProvider.value(
+                  value: context.read<TrangCfBloc>(),
+                  child: const CappuccinoWithLowFatMilk(),
+                ),
               ),
             );
           }
@@ -132,16 +263,28 @@ class TrangCfScreen extends StatelessWidget {
                             color: Colors.brown,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.brown,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.add,
-                            color: Colors.white,
-                            size: 20,
+                        InkWell(
+                          onTap: () {
+                            context.read<TrangCfBloc>().add(
+                              AddToCartEvent(
+                                name: item.name,
+                                price: double.parse(
+                                  item.price.replaceAll(',', ''),
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(4),
+                            decoration: const BoxDecoration(
+                              color: Colors.brown,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ],
@@ -392,12 +535,20 @@ class TrangCfScreen extends StatelessWidget {
     );
   }
 
-  static Widget _buildBottomNavigation() {
+  static Widget _buildBottomNavigation(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.brown,
       unselectedItemColor: Colors.grey,
       currentIndex: 0,
+      onTap: (index) {
+        if (index == 3) { // Tab Profile
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfileScreen()),
+          );
+        }
+      },
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),

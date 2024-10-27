@@ -4,6 +4,9 @@ import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/dangnhap_screen/dangnhap_screen.dart';
 import '../presentation/getstarted_screen/getstarted_screen.dart';
 import '../presentation/trang_cf_screen/trang_cf_screen.dart';
+import '../presentation/trang_cf_screen/bloc/trang_cf_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../presentation/trang_cf_screen/models/trang_cf_model.dart';
 // import '../presentation/';
 // import '../presentation/';
 // import '../presentation/';
@@ -37,7 +40,12 @@ class AppRoutes {
     dangnhapScreen: DangnhapScreen.builder,
     // cappuccinoOneScreen: CappuccinoOneScreen.builder,
     // giohangOneScreen: GiohangOneScreen.builder,
-    trangCfScreen: TrangCfScreen.builder,
+    trangCfScreen: (context) => BlocProvider(
+      create: (context) => TrangCfBloc(
+        TrangCfState(trangCfModelObj: TrangCfModel()),
+      )..add(TrangCfInitialEvent()),
+      child: const TrangCfScreen(),
+    ),
     // themgiohangScreen: ThemgiohangScreen.builder,
     // thanhtoanScreen: ThanhtoanScreen.builder,
     // motatrasuaScreen: MotatrasuaScreen.builder,

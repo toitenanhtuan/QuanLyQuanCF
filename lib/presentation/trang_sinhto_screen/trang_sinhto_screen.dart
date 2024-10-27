@@ -278,7 +278,7 @@ class _SinhToScreenContext extends StatelessWidget {
           } else if (label == 'Cà Phê') {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => TrangCfScreen()),
+              MaterialPageRoute(builder: (context) => TrangCfScreen.builder(context)),
             );
           }
         },
