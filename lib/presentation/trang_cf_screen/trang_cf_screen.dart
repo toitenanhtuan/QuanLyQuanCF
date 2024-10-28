@@ -60,6 +60,7 @@ class _TrangCfScreenState extends State<TrangCfScreen> {
   }
 
   Widget _buildFloatingCartBar(BuildContext context,TrangCfState state) {
+
     if (!state.showCart) return const SizedBox.shrink();
 
     final totalItems = state.cartItems.values
@@ -72,6 +73,7 @@ class _TrangCfScreenState extends State<TrangCfScreen> {
       final formatter = NumberFormat('#,###', 'vi_VN');
       return formatter.format(price);
     }
+
 
     return Positioned(
       bottom: 10,
@@ -158,12 +160,21 @@ class _TrangCfScreenState extends State<TrangCfScreen> {
                   ),
                 ),
               ),
-              child: Text(
-                '${formatPrice(totalPrice)}vnd',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+              child: GestureDetector(
+                onTap: () {
+                  // Chuyển sang màn hình cart
+                  Navigator.push(
+                    context,
+                    CartScreen.route(context.read<TrangCfBloc>()),
+                  );
+                },
+                child: Text(
+                  '${formatPrice(totalPrice)}vnd',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
                 ),
               ),
             ),

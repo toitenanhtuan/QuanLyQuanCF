@@ -1,8 +1,8 @@
-// cart/cart_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../trang_cf_screen/bloc/trang_cf_bloc.dart';
 import 'package:intl/intl.dart';
+import 'payment_screen.dart';
 
 class CartScreen extends StatelessWidget {
   final TrangCfBloc trangCfBloc;
@@ -27,8 +27,21 @@ class CartScreen extends StatelessWidget {
   }
 }
 
-class CartView extends StatelessWidget {
+class CartView extends StatefulWidget {
   const CartView({Key? key}) : super(key: key);
+
+  @override
+  State<CartView> createState() => _CartViewState();
+}
+
+class _CartViewState extends State<CartView> {
+  String selectedPaymentMethod = 'Chưa chọn phương thức thanh toán';
+
+  void _updatePaymentMethod(String method) {
+    setState(() {
+      selectedPaymentMethod = method;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +64,7 @@ class CartView extends StatelessWidget {
             child: Column(
               children: [
                 _buildCartItems(context, state),
-                _buildPaymentMethod(),
+                _buildPaymentMethod(context),
                 _buildDeliveryAddress(),
                 _buildPromotionCode(),
                 _buildOrderSummary(state),
@@ -146,16 +159,23 @@ class CartView extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentMethod() {
+  Widget _buildPaymentMethod(BuildContext context) {
     return ListTile(
       title: const Text(
         'Phương thức thanh toán',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      subtitle: const Text('Chưa chọn phương thức thanh toán'),
+      subtitle: Text(selectedPaymentMethod),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {
-        // Handle payment method selection
+      onTap: () async {
+        final selectedMethod = await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PaymentMethodScreen(
+              onPaymentSelected: _updatePaymentMethod,
+            ),
+          ),
+        );
       },
     );
   }
@@ -220,7 +240,7 @@ class CartView extends StatelessWidget {
               Text('-${formatPrice(0)}đ'),
             ],
           ),
-          const Divider(height: 24),
+          const Divider(height: 24, thickness: 1,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -275,6 +295,7 @@ class CartView extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
         ),
@@ -286,4 +307,6 @@ class CartView extends StatelessWidget {
     final formatter = NumberFormat('#,###', 'vi_VN');
     return formatter.format(price);
   }
+
+
 }
