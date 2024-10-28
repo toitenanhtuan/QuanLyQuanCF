@@ -144,6 +144,7 @@ class DangnhapScreen extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 contentPadding: EdgeInsets.fromLTRB(24.h, 14.h, 24.h, 12.h),
                 borderDecoration: TextFormFieldStyleHelper.fillOnPrimary,
+                obscureText: true,
               );
             },
           ),

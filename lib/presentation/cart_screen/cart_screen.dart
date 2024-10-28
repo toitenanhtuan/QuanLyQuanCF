@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../trang_cf_screen/bloc/trang_cf_bloc.dart';
+import 'thanh_cong.dart';
 import 'package:intl/intl.dart';
 import 'payment_screen.dart';
 import 'address_screen.dart';
@@ -304,7 +305,10 @@ class _CartViewState extends State<CartView> {
             ),
           ),
           onPressed: () {
-            // Handle order placement
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const OrderSuccessScreen()),
+            );
           },
           child: Text(
             'Đặt đơn hàng - ${formatPrice(totalPrice * 1000)}đ',
