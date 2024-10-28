@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../trang_cf_screen/bloc/trang_cf_bloc.dart';
 import 'package:intl/intl.dart';
 import 'payment_screen.dart';
+import 'address_screen.dart';
 
 class CartScreen extends StatelessWidget {
   final TrangCfBloc trangCfBloc;
@@ -36,10 +37,16 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   String selectedPaymentMethod = 'Chưa chọn phương thức thanh toán';
+  String? selectedAddress;
 
   void _updatePaymentMethod(String method) {
     setState(() {
       selectedPaymentMethod = method;
+    });
+  }
+  void _updateSelectedAddress(String name, String phone, String address) {
+    setState(() {
+      selectedAddress = '$name\nSố điện thoại: $phone\nĐịa chỉ: $address';
     });
   }
 
@@ -76,6 +83,8 @@ class _CartViewState extends State<CartView> {
       },
     );
   }
+
+
 
   Widget _buildCartItems(BuildContext context, TrangCfState state) {
     return ListView.builder(
@@ -186,10 +195,17 @@ class _CartViewState extends State<CartView> {
         'Địa chỉ giao hàng',
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      subtitle: const Text('Chưa chọn địa chỉ giao hàng'),
+      subtitle: Text(selectedAddress ?? 'Chưa chọn địa chỉ giao hàng'),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: () {
-        // Handle delivery address selection
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AddressScreen(
+              onSelectAddress: _updateSelectedAddress,
+            ),
+          ),
+        );
       },
     );
   }
