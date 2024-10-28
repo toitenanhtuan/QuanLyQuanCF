@@ -24,3 +24,4 @@ class TrangCfState {
 }
 
 final class TrangCfInitial extends TrangCfState {}
+

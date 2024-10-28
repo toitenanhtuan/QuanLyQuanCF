@@ -166,16 +166,21 @@ class DangnhapScreen extends StatelessWidget {
     );
   }
 
-  void onTapDangNhap(BuildContext context) async {
-    final bloc = context.read<DangnhapBloc>();
-    final emailController = bloc.state.emailtwoController;
-
-    if (emailController != null && emailController.text.isNotEmpty) {
-      // Lưu email vào SharedPreferences
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('user_email', emailController.text);
-
-      NavigatorService.pushNamed(AppRoutes.trangCfScreen);
-    }
+  // void onTapDangNhap(BuildContext context) async {
+  //   final bloc = context.read<DangnhapBloc>();
+  //   final emailController = bloc.state.emailtwoController;
+  //
+  //   if (emailController != null && emailController.text.isNotEmpty) {
+  //     // Lưu email vào SharedPreferences
+  //     final prefs = await SharedPreferences.getInstance();
+  //     await prefs.setString('user_email', emailController.text);
+  //
+  //     NavigatorService.pushNamed(AppRoutes.trangCfScreen);
+  //   }
+  // }
+  
+  onTapDangNhap(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.trangCfScreen,
+    );
   }
 }

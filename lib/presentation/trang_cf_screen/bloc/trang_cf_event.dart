@@ -10,3 +10,4 @@ class AddToCartEvent extends TrangCfEvent {
 
   AddToCartEvent({required this.name, required this.price});
 }
+

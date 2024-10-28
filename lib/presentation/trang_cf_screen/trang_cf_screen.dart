@@ -4,10 +4,13 @@ import 'bloc/trang_cf_bloc.dart';
 import 'models/trang_cf_model.dart';
 import '../trang_trasua_screen/trang_trasua_screen.dart';
 import '../trang_sinhto_screen/trang_sinhto_screen.dart';
+import '../favourite_screen/favourite_screen.dart';
 import '../profile_screen/profile_screen.dart';
 import 'cappuccino_with_chocolate.dart';
 import 'cappuccino_with_low_fat_milk.dart';
 import 'package:intl/intl.dart';
+import '../cart_screen/cart_screen.dart';
+import '../favourite_screen/bloc/farourite_bloc.dart';
 
 class TrangCfScreen extends StatefulWidget {
   const TrangCfScreen({Key? key}) : super(key: key);
@@ -236,6 +239,37 @@ class _TrangCfScreenState extends State<TrangCfScreen> {
                       fit: BoxFit.cover,
                     ),
                   ),
+                  // Positioned(
+                  //   top: 8,
+                  //   left: 8,
+                  //   child: BlocBuilder<FavouriteBloc, FavouriteState>(
+                  //     builder: (context, state) {
+                  //       final isFavourite = state.favouriteItems
+                  //           .any((favItem) => favItem.name == item.name);
+                  //       return InkWell(
+                  //         onTap: () {
+                  //           context.read<FavouriteBloc>().add(
+                  //             ToggleFavouriteEvent(item),
+                  //           );
+                  //         },
+                  //         child: Container(
+                  //           padding: const EdgeInsets.all(4),
+                  //           decoration: const BoxDecoration(
+                  //             color: Colors.white,
+                  //             shape: BoxShape.circle,
+                  //           ),
+                  //           child: Icon(
+                  //             isFavourite
+                  //                 ? Icons.favorite
+                  //                 : Icons.favorite_border,
+                  //             color: isFavourite ? Colors.red : Colors.grey,
+                  //             size: 20,
+                  //           ),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
               Padding(
@@ -542,11 +576,25 @@ class _TrangCfScreenState extends State<TrangCfScreen> {
       unselectedItemColor: Colors.grey,
       currentIndex: 0,
       onTap: (index) {
-        if (index == 3) { // Tab Profile
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ProfileScreen()),
-          );
+        switch (index) {
+          case 1:
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const FavouriteScreen()),
+            );
+            break;
+          case 2:
+            Navigator.push(
+              context,
+              CartScreen.route(context.read<TrangCfBloc>()),
+            );
+            break;
+          case 3:
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+            break;
         }
       },
       items: const [

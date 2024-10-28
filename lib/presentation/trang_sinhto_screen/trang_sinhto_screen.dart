@@ -4,6 +4,7 @@ import 'bloc/sinhto_bloc.dart';
 import 'models/sinhto_model.dart';
 import '../trang_cf_screen/trang_cf_screen.dart';
 import '../trang_trasua_screen/trang_trasua_screen.dart';
+import '../profile_screen/profile_screen.dart';
 import 'sinhtobo.dart';
 import 'sinhtoxoai.dart';
 
@@ -44,7 +45,7 @@ class _SinhToScreenContext extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: _buildBottomNavigation(),
+          bottomNavigationBar: _buildBottomNavigation(context),
         );
       },
     );
@@ -376,18 +377,37 @@ class _SinhToScreenContext extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigation() {
+  static Widget _buildBottomNavigation(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.brown,
       unselectedItemColor: Colors.grey,
-      items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+      currentIndex: 0,
+      onTap: (index) {
+        if (index == 3) { // Tab Profile
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => ProfileScreen()),
+          );
+        }
+      },
+      items: const [
         BottomNavigationBarItem(
-            icon: Icon(Icons.favorite_border), label: 'Favourite'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
         BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline), label: 'Profile'),
+          icon: Icon(Icons.favorite_border),
+          label: 'Favourite',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.shopping_cart_outlined),
+          label: 'Cart',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_outline),
+          label: 'Profile',
+        ),
       ],
     );
   }
